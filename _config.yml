@@ -1,0 +1,11 @@
+title: Awin Trades
+description: "Awin Trades: a trading journal and free Discord community. ES futures, price action, with the trend. Education only, not financial advice."
+url: "https://awizzlebased.github.io"
+baseurl: "/awintrades"
+timezone: America/Los_Angeles
+markdown: kramdown
+permalink: /journal/:year/:month/:day/:title/
+defaults:
+  - scope: { type: posts }
+    values: { layout: post }
+exclude: [README.md, POSTING.md]

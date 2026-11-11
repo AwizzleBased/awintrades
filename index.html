@@ -270,6 +270,7 @@ i.mk { width: 9px; height: 9px; border-radius: 50%; }
 .view-entry { display: grid; gap: 14px; }
 .view-entry .empty { color: var(--muted); }
 .view-entry .entry { border: 0; background: none; padding: 0; }
+.view-entry .entry + .entry { border-top: 1px solid var(--line); padding-top: 20px; margin-top: 6px; }
 .view-entry .entry h2 { font-family: var(--display); font-size: 32px; line-height: 1.1; }
 .jlist-title { font-family: var(--display); font-size: 30px; margin-bottom: 12px; }
 .elist { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
@@ -765,7 +766,7 @@ i.mk { width: 9px; height: 9px; border-radius: 50%; }
     if (!store || !grid) return;
     var posts = Array.prototype.slice.call(store.querySelectorAll('article.entry'));
     var byDate = {};
-    posts.forEach(function (a) { byDate[a.dataset.date] = a; });
+    posts.forEach(function (a) { (byDate[a.dataset.date] = byDate[a.dataset.date] || []).push(a); });
     var monthEl = document.getElementById('calMonth'), countEl = document.getElementById('calCount');
     var panel = document.getElementById('entryPanel'), list = document.getElementById('entryList');
     var navs = document.querySelectorAll('.cal-nav');
@@ -790,14 +791,14 @@ i.mk { width: 9px; height: 9px; border-radius: 50%; }
       var startDow = new Date(y, m, 1).getDay(), days = new Date(y, m + 1, 0).getDate(), n = 0;
       for (var i = 0; i < startDow; i++) { var p = document.createElement('span'); p.className = 'day pad'; p.setAttribute('aria-hidden', 'true'); grid.appendChild(p); }
       for (var d = 1; d <= days; d++) {
-        var k = key(y, m, d), a = byDate[k], dow = (startDow + d - 1) % 7;
+        var k = key(y, m, d), all = byDate[k], a = all && all[0], dow = (startDow + d - 1) % 7;
         var el = document.createElement(a ? 'button' : 'span');
         el.className = 'day' + (dow === 0 || dow === 6 ? ' wknd' : '') + (k > todayKey ? ' future' : '') + (k === todayKey ? ' today' : '') + (a ? ' has' : '') + (k === selected ? ' sel' : '');
         var num = document.createElement('span'); num.textContent = d; el.appendChild(num);
         if (a) {
-          n++;
+          n += all.length;
           el.type = 'button';
-          el.setAttribute('aria-label', MONTHS[m] + ' ' + d + ': ' + a.dataset.title + (isSat(a) ? ' (sat out)' : '') + (a.dataset.grade ? ', grade ' + a.dataset.grade : ''));
+          el.setAttribute('aria-label', MONTHS[m] + ' ' + d + ': ' + all.map(function (x) { return x.dataset.title; }).join('; ') + (isSat(a) ? ' (sat out)' : '') + (a.dataset.grade ? ', grade ' + a.dataset.grade : ''));
           if (k === selected) el.setAttribute('aria-pressed', 'true');
           var mk = document.createElement('span'); mk.className = 'mk';
           var dot = document.createElement('i'); dot.className = 'dot ' + (isSat(a) ? 'sat' : 'traded'); mk.appendChild(dot);
@@ -812,7 +813,7 @@ i.mk { width: 9px; height: 9px; border-radius: 50%; }
     function showEntry() {
       panel.innerHTML = '';
       if (!selected) { var e = document.createElement('p'); e.className = 'empty'; e.textContent = 'No entries yet. The first one is coming soon.'; panel.appendChild(e); return; }
-      panel.appendChild(byDate[selected].cloneNode(true));
+      byDate[selected].forEach(function (a) { panel.appendChild(a.cloneNode(true)); });
       Array.prototype.forEach.call(list.querySelectorAll('button'), function (b) { b.setAttribute('aria-current', b.dataset.date === selected ? 'true' : 'false'); });
     }
     function select(k, jump) {
@@ -820,8 +821,8 @@ i.mk { width: 9px; height: 9px; border-radius: 50%; }
       if (jump) ym = +k.slice(0, 4) * 12 + (+k.slice(5, 7) - 1);
       render(); showEntry();
     }
-    dates.slice().reverse().forEach(function (k) {
-      var a = byDate[k], li = document.createElement('li'), b = document.createElement('button');
+    posts.forEach(function (a) {
+      var k = a.dataset.date, li = document.createElement('li'), b = document.createElement('button');
       b.type = 'button'; b.dataset.date = k;
       var dt = new Date(+k.slice(0, 4), +k.slice(5, 7) - 1, +k.slice(8, 10));
       var d = document.createElement('span'); d.className = 'd'; d.textContent = MONTHS[dt.getMonth()].slice(0, 3) + ' ' + dt.getDate() + ', ' + dt.getFullYear();

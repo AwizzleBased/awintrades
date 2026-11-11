@@ -29,5 +29,6 @@ Did I follow my rules? What I'll do tomorrow.
 - `status` is `traded` or `sat out`. It sets the calendar mark (filled dot or ring).
 - `setup`, `grade` and `takeaway` are optional; delete any line you don't need.
 - Grade the process (did I follow my rules?), not P&L. Keep account balances and P&L off the site.
-- Chart screenshot: upload it to `assets/journal/`, then add `![Chart]({{ site.baseurl }}/assets/journal/your-file.png)` in the post.
+- Chart screenshot: upload it to `assets/journal/`, then add `[![Chart]({{ site.baseurl }}/assets/journal/your-file.png)]({{ site.baseurl }}/assets/journal/your-file.png)` in the post (click opens it full size).
+- Two entries on the same day are fine; both show when you click that day.
 - The site updates about a minute after you commit.

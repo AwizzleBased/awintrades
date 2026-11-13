@@ -193,6 +193,18 @@ tbody th { font-weight: 500; }
 .code { font-family: var(--mono); font-weight: 500; }
 .buy { color: var(--long); } .sell { color: var(--short); }
 .note { font-size: 14px !important; }
+.play { margin-top: 34px; padding-top: 34px; border-top: 1px solid var(--line); display: grid; gap: 22px; }
+.play h2 { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; }
+.play h2 .code { font-size: 14px; letter-spacing: .04em; }
+.play h3 { font-family: var(--sans); font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); font-weight: 400; margin: 10px 0 0; }
+.play .why p + p { margin-top: 14px; }
+.shots { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.shots figure { margin: 0; display: grid; gap: 8px; }
+.shots a { display: block; background: #000; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+.shots img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: contain; }
+.shots a:hover, .shots a:focus-visible { border-color: var(--sage); }
+.shots figcaption { font-size: 13.5px; color: var(--muted); }
+@media (max-width: 560px) { .shots { grid-template-columns: minmax(0, 1fr); } }
 
 
 
@@ -581,6 +593,35 @@ i.mk { width: 9px; height: 9px; border-radius: 50%; }
       </table>
     </div>
     <p class="note">H2 / L2: the second leg of a pullback ends and the trend resumes. FH2 / FL2: the other side's entry fails, and I trade with the trend against them. These ideas come from Al Brooks' price action; I cover only the parts I use, in my own words.</p>
+    <ul class="rows">
+      <li><span class="k">Signal bar</span><span class="v"><b>The bar that sets up the trade.</b> I wait for it to close before I act.</span></li>
+      <li><span class="k">Entry bar</span><span class="v"><b>The next bar, the one that gets me in.</b> For a buy, it has to trade above the signal bar's high.</span></li>
+    </ul>
+
+    <section class="play" id="fl2" aria-labelledby="fl2-title">
+      <h2 id="fl2-title">Failed Low 2 <span class="code buy">FL2 · buy</span></h2>
+      <p>A buy in a bull trend. The bears try twice to reverse it, and fail twice.</p>
+      <ul class="rows">
+        <li><span class="k">1 · Trend</span><span class="v"><b>Bull trend.</b> Price shows signs of a bull trend. Always in long.</span></li>
+        <li><span class="k">2 · FL1</span><span class="v"><b>Failed Low 1.</b> The first attempt down fails.</span></li>
+        <li><span class="k">3 · FL2</span><span class="v"><b>Failed Low 2.</b> The second attempt fails too. Entry above the signal bar's high.</span></li>
+        <li><span class="k">4 · Stop</span><span class="v"><b>Stop.</b> Under the pullback low.</span></li>
+      </ul>
+      <h3>Why I take it</h3>
+      <div class="why">
+        <p>In a bull trend the market is always in long. Every pullback is the bears trying to reverse it.</p>
+        <p><strong>A Failed Low 2 means the bears tried twice and failed twice. After two failures, most bears give up. They buy back their shorts, and bulls who were waiting buy the pullback. Both sides are buying at the same time.</strong></p>
+        <p>That is why I take it. I am not guessing at a reversal. I am trading with the trend, after the other side has shown twice that it cannot stop it. The odds favor the trend continuing.</p>
+      </div>
+      <h3>Examples from my charts</h3>
+      <div class="shots">
+        <figure><a href="{{ site.baseurl }}/assets/setups/fl2-1.png" target="_blank" rel="noopener"><img src="{{ site.baseurl }}/assets/setups/fl2-1.png" alt="A 5-minute chart of a strong bull trend with a Failed Low 2 buy marked" loading="lazy"></a><figcaption>Strong bull trend. FL1 fails, then FL2.</figcaption></figure>
+        <figure><a href="{{ site.baseurl }}/assets/setups/fl2-2.png" target="_blank" rel="noopener"><img src="{{ site.baseurl }}/assets/setups/fl2-2.png" alt="A 5-minute chart of a bull trend with a Failed Low 2 buy marked" loading="lazy"></a><figcaption>Bull trend, always in long. FL1, then FL2.</figcaption></figure>
+        <figure><a href="{{ site.baseurl }}/assets/setups/fl2-3.png" target="_blank" rel="noopener"><img src="{{ site.baseurl }}/assets/setups/fl2-3.png" alt="A 5-minute chart of a strong bull trend with Failed Low 1 and Failed Low 2 marked" loading="lazy"></a><figcaption>Strong bull trend. FL1 fails, then FL2.</figcaption></figure>
+        <figure><a href="{{ site.baseurl }}/assets/setups/fl2-4.png" target="_blank" rel="noopener"><img src="{{ site.baseurl }}/assets/setups/fl2-4.png" alt="A 5-minute chart of a tight bull channel with Failed Low 1 and Failed Low 2 marked" loading="lazy"></a><figcaption>Tight bull channel. FL1 fails, then FL2.</figcaption></figure>
+      </div>
+      <p class="note">Tap a chart to see it full size. Educational content only. Not financial advice.</p>
+    </section>
   </div></div>
 </main>
 

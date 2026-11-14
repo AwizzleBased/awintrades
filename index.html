@@ -269,10 +269,13 @@ dialog.zoom button:hover, dialog.zoom button:focus-visible { border-color: var(-
 .gtext p { color: var(--muted); max-width: 60ch; }
 /* journal dashboard */
 .jwrap { display: grid; gap: 36px; }
-.jhead { max-width: 720px; display: grid; gap: 22px; }
-.jhead h1 { font-family: var(--display); font-size: clamp(44px, 6.4vw, 70px); line-height: 1.02; }
+.jhead { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 48px; row-gap: 10px; align-items: end; }
+.jhead .eyebrow { grid-column: 1 / -1; }
+.jhead h1 { font-family: var(--display); font-size: clamp(34px, 3.6vw, 44px); line-height: 1.05; white-space: nowrap; }
+@media (max-width: 760px) { .jhead { grid-template-columns: minmax(0, 1fr); } .jhead h1 { white-space: normal; } }
 .jhead h1 em { font-style: italic; color: var(--sage); }
-.jhead > p:last-child { color: var(--muted); font-size: 17px; max-width: 62ch; }
+.jhead > p:last-child { color: var(--muted); font-size: 15px; max-width: 52ch; justify-self: end; text-align: right; }
+@media (max-width: 760px) { .jhead > p:last-child { justify-self: start; text-align: left; } }
 .jdash { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 20px; align-items: start; }
 .jcard { border: 1px solid var(--line); background: var(--band); border-radius: 6px; padding: 24px; min-width: 0; }
 .cal-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }

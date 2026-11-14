@@ -313,7 +313,11 @@ i.mk { width: 9px; height: 9px; border-radius: 50%; }
 .elist .d { font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
 .elist .s { font-size: 12.5px; color: var(--muted); }
 .elist .g { font-family: var(--display); font-size: 20px; color: var(--sage); min-width: 2ch; text-align: right; }
-.jcovers { max-width: 720px; display: grid; gap: 18px; }
+.jtop { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 20px; align-items: end; }
+.jcovers { display: grid; gap: 10px; }
+.jcovers-title { font-family: var(--sans); font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); font-weight: 400; }
+.jcovers .rows li { padding: 7px 0; font-size: 14.5px; }
+@media (max-width: 920px) { .jtop { display: contents; } .jcovers { order: 5; } }
 @media (max-width: 920px) { .jdash { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 560px) {
   .jcard { padding: 16px; }
@@ -501,10 +505,23 @@ i.mk { width: 9px; height: 9px; border-radius: 50%; }
 <!-- JOURNAL -->
 <main id="journal" class="view inner" hidden>
   <div class="wrap jwrap">
+    <div class="jtop">
     <div class="jhead">
       <p class="eyebrow">Trading Journal</p>
       <h1>Every session, <em>written down.</em></h1>
       <p>One entry per trading day: the plan, what happened, and the grade on process. Losing days and sat-out days stay up too.</p>
+    </div>
+      <div class="jcovers">
+      <h2 class="jcovers-title">What every entry covers</h2>
+      <ul class="rows">
+        <li><span class="k">Context</span><span class="v">Trend or range, and which side is in control</span></li>
+        <li><span class="k">Setup</span><span class="v">H2, L2, FH2, FL2, or none</span></li>
+        <li><span class="k">Trade</span><span class="v">Entry, stop and target in points</span></li>
+        <li><span class="k">Result</span><span class="v"><span class="buy">+</span> or <span class="sell">−</span> points, shown as is</span></li>
+        <li><span class="k">Grade</span><span class="v">A to F, on process only</span></li>
+        <li><span class="k">Key takeaway</span><span class="v">The one thing tomorrow's plan changes</span></li>
+      </ul>
+      </div>
     </div>
 
     <div class="jdash">
@@ -545,17 +562,6 @@ i.mk { width: 9px; height: 9px; border-radius: 50%; }
       {% endfor %}
     </div>
 
-    <div class="jcovers">
-    <h2>What every entry covers</h2>
-    <ul class="rows">
-      <li><span class="k">Context</span><span class="v">Trend or range, and which side is in control</span></li>
-      <li><span class="k">Setup</span><span class="v">H2, L2, FH2, FL2, or none</span></li>
-      <li><span class="k">Trade</span><span class="v">Entry, stop and target in points</span></li>
-      <li><span class="k">Result</span><span class="v"><span class="buy">+</span> or <span class="sell">−</span> points, shown as is</span></li>
-      <li><span class="k">Grade</span><span class="v">A to F, on process only</span></li>
-      <li><span class="k">Key takeaway</span><span class="v">The one thing tomorrow's plan changes</span></li>
-    </ul>
-    </div>
   </div>
 </main>
 

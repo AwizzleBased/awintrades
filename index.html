@@ -8,7 +8,28 @@ layout: null
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Awin Trades</title>
 <meta name="description" content="{{ site.description }}">
-<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}
+/* motion: phase 1 */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes fadein { from { opacity: 0; } }
+  .mo .view:not([hidden]) { animation: fadein .45s ease both; }
+  .mo #entryPanel > * { animation: fadein .45s ease both; }
+  .mo dialog.zoom[open] { animation: fadein .25s ease both; }
+  .mo .rv { opacity: 0; transform: translateY(14px); transition: opacity .7s ease, transform .7s ease; }
+  .mo .rv.in { opacity: 1; transform: none; }
+  .mo .sketch polyline { stroke-dasharray: 1; stroke-dashoffset: 1; opacity: 0; }
+  .mo .sketch rect, .mo .sketch line, .mo .sketch text { opacity: 0; }
+  .mo .sketch.in polyline { opacity: 1; stroke-dashoffset: 0; transition: stroke-dashoffset 1.5s ease .25s, opacity .01s linear .25s; }
+  .mo .sketch.in rect, .mo .sketch.in line, .mo .sketch.in text { opacity: 1; transition: opacity .6s ease 1.5s; }
+  .shots img { transition: transform .6s ease; }
+  .shots a:hover img { transform: scale(1.03); }
+  .mo .trendline polyline { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .mo .trendline.in polyline { stroke-dashoffset: 0; transition: stroke-dashoffset 2.8s cubic-bezier(.4, 0, .2, 1) .3s; }
+}
+.trendline { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 40%; pointer-events: none; }
+.trendline polyline { fill: none; stroke: var(--sage); stroke-opacity: .26; stroke-width: 1.5; vector-effect: non-scaling-stroke; stroke-linejoin: round; stroke-linecap: round; }
+.hero .wrap { position: relative; z-index: 1; }
+</style>
 </head>
 <body>
 
@@ -1025,6 +1046,35 @@ i.mk { width: 9px; height: 9px; border-radius: 50%; }
   document.getElementById('zoomClose').addEventListener('click', function () { d.close(); });
   d.addEventListener('click', function (e) { if (e.target === d) d.close(); });
   d.addEventListener('keydown', function (e) { if (e.key === 'ArrowLeft') step(-1); if (e.key === 'ArrowRight') step(1); });
+})();
+</script>
+<script>
+/* motion: phase 1 */
+(function () {
+  var hero = document.querySelector('.hero');
+  if (hero && !hero.querySelector('.trendline')) {
+    var ns = 'http://www.w3.org/2000/svg', s = document.createElementNS(ns, 'svg'), l = document.createElementNS(ns, 'polyline');
+    s.setAttribute('class', 'trendline'); s.setAttribute('viewBox', '0 0 1200 200'); s.setAttribute('preserveAspectRatio', 'none'); s.setAttribute('aria-hidden', 'true');
+    l.setAttribute('points', '0,194 150,182 210,190 350,170 420,182 480,174 630,122 710,142 770,130 910,72 990,94 1060,80 1200,22'); l.setAttribute('pathLength', '1');
+    s.appendChild(l); hero.insertBefore(s, hero.firstChild);
+  }
+  var ok = window.matchMedia && window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
+  if (!ok || !('IntersectionObserver' in window)) return;
+  document.querySelectorAll('.sketch polyline').forEach(function (p) { p.setAttribute('pathLength', '1'); });
+  var targets = document.querySelectorAll('#home > section:not(.hero), .inner .col > *, .play, .jhead, .jcard, .jcovers, .jlist');
+  targets.forEach(function (el) { el.classList.add('rv'); });
+  document.documentElement.classList.add('mo');
+  var io = new IntersectionObserver(function (es) {
+    var i = 0;
+    es.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var el = e.target;
+      if (el.classList.contains('rv')) { el.style.transitionDelay = Math.min(i++, 4) * 70 + 'ms'; }
+      el.classList.add('in'); io.unobserve(el);
+    });
+  }, { rootMargin: '0px 0px -6% 0px' });
+  targets.forEach(function (el) { io.observe(el); });
+  document.querySelectorAll('.sketch, .trendline').forEach(function (el) { io.observe(el); });
 })();
 </script>
 </body>

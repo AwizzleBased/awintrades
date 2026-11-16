@@ -246,6 +246,7 @@ dialog.zoom .zbar { display: flex; align-items: center; justify-content: space-b
 dialog.zoom .zcap { font-size: 14px; color: var(--muted); }
 dialog.zoom .zbtns { display: flex; gap: 8px; flex: none; }
 dialog.zoom button { font: inherit; font-size: 13px; min-height: 44px; min-width: 44px; padding: 0 14px; color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 4px; cursor: pointer; }
+dialog.zoom button[hidden] { display: none; }
 dialog.zoom button:hover, dialog.zoom button:focus-visible { border-color: var(--sage); }
 @media (max-width: 900px) { .play { grid-template-columns: minmax(0, 1fr); } }
 
@@ -1035,15 +1036,25 @@ i.mk { width: 9px; height: 9px; border-radius: 50%; }
 (function () {
   var d = document.getElementById('zoom'); if (!d || !d.showModal) return;
   var img = document.getElementById('zoomImg'), cap = document.getElementById('zoomCap'), set = [], i = 0;
-  function draw() { var a = set[i], f = a.closest('figure'), c = f && f.querySelector('figcaption'); img.src = a.href; img.alt = a.querySelector('img').alt; cap.textContent = c ? c.textContent : ''; }
+  var prev = document.getElementById('zoomPrev'), next = document.getElementById('zoomNext'), close = document.getElementById('zoomClose');
+  function draw() { var a = set[i], f = a.closest('figure'), c = f && f.querySelector('figcaption'), im = a.querySelector('img'); img.src = a.href; img.alt = im ? im.alt : ''; cap.textContent = c ? c.textContent : (a.closest('.entry') && im ? im.alt : ''); }
   function step(n) { i = (i + n + set.length) % set.length; draw(); }
+  var isImg = /\.(png|jpe?g|webp|gif)(\?|#|$)/i;
   document.addEventListener('click', function (e) {
-    var a = e.target.closest && e.target.closest('.shots a'); if (!a) return;
-    e.preventDefault(); set = Array.prototype.slice.call(a.closest('.shots').querySelectorAll('a')); i = set.indexOf(a); draw(); d.showModal();
+    if (!e.target.closest) return;
+    var a = e.target.closest('.shots a'), box, journal = false;
+    if (a) box = a.closest('.shots');
+    else { a = e.target.closest('.entry a'); if (!a || !isImg.test(a.getAttribute('href') || '') || !a.querySelector('img')) return; box = a.closest('.entry'); journal = true; }
+    e.preventDefault();
+    set = Array.prototype.slice.call(box.querySelectorAll('a')).filter(function (x) { return x.querySelector('img') && (!journal || isImg.test(x.getAttribute('href') || '')); });
+    i = set.indexOf(a); draw();
+    prev.hidden = next.hidden = set.length < 2;
+    close.textContent = journal ? '\u2190 Back to journal' : 'Close';
+    d.showModal();
   });
-  document.getElementById('zoomPrev').addEventListener('click', function () { step(-1); });
-  document.getElementById('zoomNext').addEventListener('click', function () { step(1); });
-  document.getElementById('zoomClose').addEventListener('click', function () { d.close(); });
+  prev.addEventListener('click', function () { step(-1); });
+  next.addEventListener('click', function () { step(1); });
+  close.addEventListener('click', function () { d.close(); });
   d.addEventListener('click', function (e) { if (e.target === d) d.close(); });
   d.addEventListener('keydown', function (e) { if (e.key === 'ArrowLeft') step(-1); if (e.key === 'ArrowRight') step(1); });
 })();

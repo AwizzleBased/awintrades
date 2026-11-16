@@ -6,7 +6,7 @@ setup: FH2
 grade: A+
 takeaway: Trust my system.
 ---
-[![My chart for the day: a bear breakout below the Nov 13 and Nov 10 lows, a pullback toward the EMA, then the failed High 2 short]({{ site.baseurl }}/assets/journal/2026-11-16.png)]({{ site.baseurl }}/assets/journal/2026-11-16.png)
+[![My chart for the day: a strong bear spike below the Nov 13 and Nov 10 lows, a deep pullback into a trading range, a bear breakout, then the failed High 2 short down to the Nov 9 low]({{ site.baseurl }}/assets/journal/2026-11-16-day.png)]({{ site.baseurl }}/assets/journal/2026-11-16-day.png)
 
 ### What happened
 The day opened bearish. The bears got strong closes below several swing lows, including the Nov 13 and Nov 10 lows, so this was a bear breakout with follow-through.

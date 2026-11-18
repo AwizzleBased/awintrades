@@ -2,7 +2,7 @@
 title: Bear spike, then sideways
 market: MES Futures
 status: sat out
-grade: B
+grade: C+
 takeaway: Be at the charts before the open.
 ---
 [![My chart for the day: a strong bear spike through the Nov 5 and Nov 6 lows after a failed High 2, a deep pullback and failed breakout, then a contracting triangle for the rest of the day]({{ site.baseurl }}/assets/journal/2026-11-17.png)]({{ site.baseurl }}/assets/journal/2026-11-17.png)

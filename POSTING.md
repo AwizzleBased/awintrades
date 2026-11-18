@@ -32,3 +32,9 @@ Did I follow my rules? What I'll do tomorrow.
 - Chart screenshot: upload it to `assets/journal/`, then add `[![Chart]({{ site.baseurl }}/assets/journal/your-file.png)]({{ site.baseurl }}/assets/journal/your-file.png)` in the post (click opens it full size).
 - Two entries on the same day are fine; both show when you click that day.
 - The site updates about a minute after you commit.
+
+## Links to a day
+Every entry has its own link: `https://awizzlebased.github.io/awintrades/#journal/YYYY-MM-DD`. Tapping a day on the calendar puts its link in the address bar, ready to copy.
+
+## Discord
+New entries are posted to #recaps automatically (a short summary + link), about 2 minutes after they go up. Editing an old entry doesn't repost it. To post a day by hand: **Actions → Post journal to Discord → Run workflow**, enter the date. The webhook link is stored as the `DISCORD_WEBHOOK` secret (Settings → Secrets and variables → Actions).

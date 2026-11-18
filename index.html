@@ -494,7 +494,7 @@ i.mk { width: 9px; height: 9px; border-radius: 50%; }
         <p class="eyebrow">Trading Journal</p>
         <h2 id="latest-title">Starting the journal.<br>Out loud.</h2>
         <p class="body">Self-taught since 2022, now focused on the part that matters most: following my rules every session. This journal is where I write it all down, wins and losses alike.</p>
-        {% assign latest = site.posts.first %}{% if latest %}<p class="latest"><span class="mono">{{ latest.date | date: "%b %-d, %Y" }}</span> · Latest entry: <a href="#journal">{{ latest.title }}</a></p>{% endif %}
+        {% assign latest = site.posts.first %}{% if latest %}<p class="latest"><span class="mono">{{ latest.date | date: "%b %-d, %Y" }}</span> · Latest entry: <a href="#journal/{{ latest.date | date: '%Y-%m-%d' }}">{{ latest.title }}</a></p>{% endif %}
         <a class="btn line" href="#journal">Read the Full Journal <span class="arr" aria-hidden="true">→</span></a>
       </div>
       <figure class="notebook"><img src="{{ site.baseurl }}/assets/img/notebook.jpg" alt="An open notebook with a pencil resting across the pages, on a dark wooden desk" width="1100" height="733" loading="lazy"></figure>
@@ -859,9 +859,11 @@ i.mk { width: 9px; height: 9px; border-radius: 50%; }
 <script>
 (function () {
   var names = { journal: 'Journal', learn: 'Learn', how: 'How I Trade', community: 'Community', about: 'About' };
+  var openDay = null; /* set by the journal dashboard: opens a date from a #journal/YYYY-MM-DD link */
   function show() {
-    var n = (location.hash || '').slice(1);
+    var parts = (location.hash || '').slice(1).split('/'), n = parts[0];
     if (!names[n]) n = 'home';
+    if (n === 'journal' && openDay) openDay(parts[1] || '');
     document.querySelectorAll('.view').forEach(function (v) { v.hidden = v.id !== n; });
     document.querySelectorAll('nav.main a').forEach(function (a) {
       if (a.getAttribute('href') === '#' + n && !a.classList.contains('join')) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
@@ -1009,7 +1011,7 @@ i.mk { width: 9px; height: 9px; border-radius: 50%; }
           var dot = document.createElement('i'); dot.className = 'dot ' + (isSat(a) ? 'sat' : 'traded'); mk.appendChild(dot);
           if (a.dataset.grade) { var g = document.createElement('b'); g.className = 'gr'; g.textContent = a.dataset.grade; mk.appendChild(g); }
           el.appendChild(mk);
-          el.addEventListener('click', select.bind(null, k));
+          el.addEventListener('click', select.bind(null, k, false));
         }
         grid.appendChild(el);
       }
@@ -1025,6 +1027,7 @@ i.mk { width: 9px; height: 9px; border-radius: 50%; }
       selected = k;
       if (jump) ym = +k.slice(0, 4) * 12 + (+k.slice(5, 7) - 1);
       render(); showEntry();
+      if (history.replaceState && location.hash !== '#journal/' + k) history.replaceState(null, '', '#journal/' + k);
     }
     posts.forEach(function (a) {
       var k = a.dataset.date, li = document.createElement('li'), b = document.createElement('button');
@@ -1041,6 +1044,11 @@ i.mk { width: 9px; height: 9px; border-radius: 50%; }
     if (!dates.length) document.querySelector('.jlist').hidden = true;
     Array.prototype.forEach.call(navs, function (b) { b.addEventListener('click', function () { ym += +b.dataset.step; render(); }); });
     render(); showEntry();
+    openDay = function (k) {
+      if (!byDate[k]) return;
+      selected = k; ym = +k.slice(0, 4) * 12 + (+k.slice(5, 7) - 1);
+      render(); showEntry();
+    };
   })();
   window.addEventListener('hashchange', show);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawAll);

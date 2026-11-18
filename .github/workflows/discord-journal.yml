@@ -1,0 +1,50 @@
+name: Post journal to Discord
+
+# New journal entries in _posts are posted to the Discord #recaps channel.
+# Editing an old entry does not repost it.
+# To post (or repost) a day by hand: Actions → Post journal to Discord → Run workflow → enter the date.
+
+on:
+  push:
+    branches: [main]
+    paths: ["_posts/**"]
+  workflow_dispatch:
+    inputs:
+      date:
+        description: "Entry date to post (YYYY-MM-DD)"
+        required: true
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Find the entries to post
+        id: find
+        env:
+          BEFORE: ${{ github.event.before }}
+          DAY: ${{ github.event.inputs.date }}
+        run: |
+          if [ -n "$DAY" ]; then
+            files=$(ls _posts/"$DAY"-*.md 2>/dev/null || true)
+          elif [ -n "$BEFORE" ] && [ "$BEFORE" != "0000000000000000000000000000000000000000" ]; then
+            files=$(git diff --name-only --diff-filter=A "$BEFORE" "$GITHUB_SHA" -- _posts | grep '\.md$' || true)
+          else
+            files=""
+          fi
+          echo "Entries: $files"
+          echo "files=$(echo $files)" >> "$GITHUB_OUTPUT"
+
+      - name: Wait for the site to update
+        if: steps.find.outputs.files != '' && github.event_name == 'push'
+        run: sleep 120   # so the entry link and chart are live when Discord opens them
+
+      - name: Post to Discord
+        if: steps.find.outputs.files != ''
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          FILES: ${{ steps.find.outputs.files }}
+        run: python3 .github/scripts/post_to_discord.py $FILES

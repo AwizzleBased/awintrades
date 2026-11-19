@@ -175,6 +175,15 @@ nav.main .join { border: 1px solid var(--ink); padding: 8px 16px; border-radius:
 .routine .title { font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); padding-bottom: 10px; }
 .routine li { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); font-size: 14.5px; }
 .routine .t { font-family: var(--mono); font-size: 12.5px; color: var(--sage); padding-top: 2px; }
+.routine .note { font-size: 12.5px; color: var(--muted); padding-top: 12px; border-top: 1px solid var(--line); display: block; }
+.path { list-style: none; margin: 4px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--line); }
+.path li { padding: 14px 16px; border-left: 1px solid var(--line); display: grid; gap: 4px; font-size: 14px; color: var(--muted); }
+.path li:first-child { border-left: 0; }
+.path .n { font-family: var(--mono); font-size: 12px; color: var(--sage); }
+.path li.here { background: linear-gradient(180deg, rgba(217,162,127,.10), rgba(127,167,184,.05)); color: var(--ink); }
+.path-src { font-size: 13px !important; }
+.path-src a, .story p a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line); }
+@media (max-width: 640px) { .path { grid-template-columns: 1fr 1fr; } .path li:nth-child(3) { border-left: 0; } .path li:nth-child(n+3) { border-top: 1px solid var(--line); } }
 .story { display: grid; gap: 14px; }
 .story h2 { font-size: 28px !important; }
 .col .lead-about { font-size: 20px; line-height: 1.55; color: var(--ink); font-weight: 300; }
@@ -518,16 +527,17 @@ i.mk { width: 9px; height: 9px; border-radius: 50%; }
     <div class="wrap">
       <div class="copy">
         <p class="eyebrow">About</p>
-        <h2 id="about-title">Self-taught. One market. Every morning.</h2>
-        <p>I'm Awin, an ES futures trader in California. I found trading in high school and began studying price action seriously in 2022. Today it's one market and one routine, every morning, written down in public.</p>
+        <h2 id="about-title">From practice to live.</h2>
+        <p>I'm Awin, a price action trader in California. I've practiced my system for years in backtesting and on paper. Now I'm taking it live, and writing down every plan, trade and review in public.</p>
         <div><a class="btn text" href="#about">Read my story <span class="arr" aria-hidden="true">→</span></a></div>
       </div>
-      <ol class="routine" aria-label="A trading morning">
-        <li class="title" style="border:0;padding-top:0;display:block">A trading morning</li>
-        <li><span class="t">6:30</span><span>Wake up, make the bed, water, stretch</span></li>
-        <li><span class="t">Before</span><span>Write the pre-market plan</span></li>
-        <li><span class="t">7:15</span><span>Session: a high-quality trade, or sit and wait</span></li>
-        <li><span class="t">After</span><span>Journal, recap, ideas for tomorrow</span></li>
+      <ol class="routine" aria-label="The morning I'm building">
+        <li class="title" style="border:0;padding-top:0;display:block">The morning I'm building</li>
+        <li><span class="t">1</span><span>Make the bed</span></li>
+        <li><span class="t">2</span><span>Hygiene, water, light stretching</span></li>
+        <li><span class="t">3</span><span>Prep the charts, write the plan</span></li>
+        <li><span class="t">7:30</span><span>Ready for the session</span></li>
+        <li class="note">Not there yet. Tracking it in the journal.</li>
       </ol>
     </div>
   </section>
@@ -811,13 +821,26 @@ i.mk { width: 9px; height: 9px; border-radius: 50%; }
 <main id="about" class="view inner" hidden>
   <div class="wrap"><div class="col">
     <p class="eyebrow">About</p>
-    <h1>Self-taught. One market. <em>Every morning.</em></h1>
-    <p class="lead-about">I'm Awin, an ES futures trader based in California. Awin Trades is my public trading journal: every plan, every trade and every review, written down while I work toward consistency.</p>
+    <h1>From practice to <em>live.</em></h1>
+    <p class="lead-about">I'm Awin, a price action trader in California. Awin Trades is my public trading journal, an honest record of every plan, trade and review as I take a system I've practiced for years and put it to work in live markets.</p>
 
     <div class="story">
-      <p>I first found trading in high school, watching traders on YouTube. I had no system, only curiosity and one conviction: if other people could learn this, so could I. The deeper I went, the clearer it became that trading is one of the hardest skills to master, and one of the few with no ceiling on how far you can improve. What drew me in was the freedom.</p>
-      <p>In 2022 I found Al Brooks, and that's when my real education in price action began. His advice to master a single market stuck with me. I've traded ES ever since, and narrowing my focus to one instrument made me a calmer, less distracted trader. Other markets can come later.</p>
-      <p>Today my work is execution: following my rules the same way, every session, and building the consistency that comes from it. The journal is how I measure the process and hold myself to it.</p>
+      <p>I found trading in high school through traders on YouTube. I didn't have a system back then, but I wanted a challenge, and trading seemed to have no ceiling at all. It made me feel special, like I was onto something most people would never try. Chasing that dream was the biggest high of my life, and I took risks without thinking twice.</p>
+      <p>In 2022 I discovered Al Brooks, and that's when I started learning price action properly. He talks about mastering one market before branching out, so I've spent my time on ES futures. Narrowing my focus made me calmer and more patient. Other markets will come later, but only once I've earned them.</p>
+      <p>Over the years my relationship with risk has changed. I'm more careful now, and I'd rather protect my account than chase a big day. That shift is a big part of why I feel ready for what comes next.</p>
+    </div>
+
+    <div class="story">
+      <h2>Where I'm at right now</h2>
+      <p>I've run my setups thousands of times through backtesting and paper trading. I know them well. Knowing a setup is one thing, though. Trading it with real money, through good days and bad, without skipping the trades that scare you, is a different skill. That's the work in front of me now: building real belief in my system and staying with it through the emotions every session brings.</p>
+      <p>If I placed myself on the <a href="https://www.quantsystems.ca/article-becoming-a-professional-price-action-trader" target="_blank" rel="noopener">path to becoming a professional price action trader</a>, I'd say I'm somewhere between learning from my mistakes and finding consistency.</p>
+      <ol class="path" aria-label="Where I am on the path">
+        <li class="here"><span class="n">15</span>Make mistakes</li>
+        <li class="here"><span class="n">16</span>Spot roadblocks</li>
+        <li class="here"><span class="n">17</span>Build routines</li>
+        <li class="here"><span class="n">18</span>Find consistency</li>
+      </ol>
+      <p class="path-src">Steps from <a href="https://www.quantsystems.ca/article-becoming-a-professional-price-action-trader" target="_blank" rel="noopener"><em>Becoming a Professional Price Action Trader</em> →</a></p>
     </div>
 
     <blockquote class="pull">Freedom comes with a price, and the price is self-discipline.</blockquote>
@@ -831,18 +854,20 @@ i.mk { width: 9px; height: 9px; border-radius: 50%; }
     </div>
 
     <div class="story">
-      <h2>A trading morning</h2>
+      <h2>The morning I'm building</h2>
+      <p>My goal is simple: be at the charts, calm and prepared, by 7:30.</p>
       <ul class="rows">
-        <li><span class="k">6:30 AM</span><span class="v">Up, bed made, water, stretch</span></li>
-        <li><span class="k">Pre-market</span><span class="v">Key levels, context, and the plan for both sides</span></li>
-        <li><span class="k">7:15 AM</span><span class="v">The session. A high-quality setup, or patience.</span></li>
-        <li><span class="k">After</span><span class="v">Journal, recap, and notes for tomorrow</span></li>
+        <li><span class="k">First</span><span class="v">Make the bed</span></li>
+        <li><span class="k">Then</span><span class="v">Hygiene, water and light stretching</span></li>
+        <li><span class="k">Pre-market</span><span class="v">Prep the charts and write the plan</span></li>
+        <li><span class="k">7:30 AM</span><span class="v">Ready for the session</span></li>
       </ul>
+      <p>I'll be honest: I'm not there yet. Some mornings I get through most of it, and others I wake up and go straight to my PC, which is the habit I'm working to break. A good session starts long before the open, so this routine is part of the process too, and I'll track it in the journal like everything else.</p>
     </div>
 
     <div class="story">
       <h2>Who this is for</h2>
-      <p>Traders who want to share their work and learn from each other: beginners looking for a clear place to start, traders who feel stuck, and anyone who wants an honest conversation about the process. I'd like this to be a place that helps people get better.</p>
+      <p>Traders who want to share their work and learn from each other: beginners looking for a clear place to start, traders who feel stuck, and anyone who wants an honest conversation about the process. I'd like this to be a place where people get better together.</p>
       <div><a class="btn solid" href="#community">Join the community <span class="arr" aria-hidden="true">→</span></a></div>
     </div>
   </div></div>

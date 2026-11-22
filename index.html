@@ -334,9 +334,7 @@ dialog.zoom button:hover, dialog.zoom button:focus-visible { border-color: var(-
 .mk { display: inline-block; }
 i.mk { width: 9px; height: 9px; border-radius: 50%; }
 .mk.traded, .day .dot.traded { background: var(--sage); }
-.mk.sat, .day .dot.sat { background: var(--long); box-shadow: none; }
-.day.has.satday { background: rgba(143, 207, 179, .2); border-color: rgba(143, 207, 179, .55); }
-.day.has.satday:hover { border-color: var(--long); }
+.mk.sat, .day .dot.sat { background: none; box-shadow: inset 0 0 0 1.5px var(--long); }
 .mk.today { background: none; box-shadow: inset 0 0 0 1.5px var(--glow); border-radius: 2px; }
 .day .dot { width: 9px; height: 9px; border-radius: 50%; }
 .day .gr { font-family: var(--display); font-size: 17px; line-height: 1; color: var(--ink); }
@@ -1027,7 +1025,7 @@ i.mk { width: 9px; height: 9px; border-radius: 50%; }
       for (var d = 1; d <= days; d++) {
         var k = key(y, m, d), all = byDate[k], a = all && all[0], dow = (startDow + d - 1) % 7;
         var el = document.createElement(a ? 'button' : 'span');
-        el.className = 'day' + (dow === 0 || dow === 6 ? ' wknd' : '') + (k > todayKey ? ' future' : '') + (k === todayKey ? ' today' : '') + (a ? ' has' : '') + (a && isSat(a) ? ' satday' : '') + (k === selected ? ' sel' : '');
+        el.className = 'day' + (dow === 0 || dow === 6 ? ' wknd' : '') + (k > todayKey ? ' future' : '') + (k === todayKey ? ' today' : '') + (a ? ' has' : '') + (k === selected ? ' sel' : '');
         var num = document.createElement('span'); num.textContent = d; el.appendChild(num);
         if (a) {
           n += all.length;

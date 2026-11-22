@@ -212,7 +212,7 @@ footer.site .socials { display: flex; flex-wrap: wrap; gap: 6px 20px; font-size:
 .entry .head { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 11.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
 .entry h2 { margin: 0; }
 .entry + .entry { margin-top: 20px; }
-.entry .head .g { color: var(--sage); font-weight: 500; letter-spacing: .05em; }
+.entry .head .g { color: var(--ink); font-weight: 500; letter-spacing: .05em; }
 .entry p { color: var(--muted); }
 .entry img { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: 4px; }
 .entry ul, .entry ol { margin: 0; padding-left: 1.2em; color: var(--muted); }
@@ -334,10 +334,12 @@ dialog.zoom button:hover, dialog.zoom button:focus-visible { border-color: var(-
 .mk { display: inline-block; }
 i.mk { width: 9px; height: 9px; border-radius: 50%; }
 .mk.traded, .day .dot.traded { background: var(--sage); }
-.mk.sat, .day .dot.sat { background: none; box-shadow: inset 0 0 0 1.5px var(--sea); }
+.mk.sat, .day .dot.sat { background: var(--long); box-shadow: none; }
+.day.has.satday { background: rgba(143, 207, 179, .12); border-color: rgba(143, 207, 179, .35); }
+.day.has.satday:hover { border-color: var(--long); }
 .mk.today { background: none; box-shadow: inset 0 0 0 1.5px var(--glow); border-radius: 2px; }
 .day .dot { width: 9px; height: 9px; border-radius: 50%; }
-.day .gr { font-family: var(--display); font-size: 17px; line-height: 1; color: var(--sage); }
+.day .gr { font-family: var(--display); font-size: 17px; line-height: 1; color: var(--ink); }
 .cal-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 12.5px; color: var(--muted); }
 .cal-foot .leg { display: inline-flex; align-items: center; gap: 8px; }
 .cal-count { margin-left: auto; font-size: 12px; }
@@ -352,7 +354,7 @@ i.mk { width: 9px; height: 9px; border-radius: 50%; }
 .elist button:hover, .elist button[aria-current="true"] { background: var(--band); }
 .elist .d { font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
 .elist .s { font-size: 12.5px; color: var(--muted); }
-.elist .g { font-family: var(--display); font-size: 20px; color: var(--sage); min-width: 2ch; text-align: right; }
+.elist .g { font-family: var(--display); font-size: 20px; color: var(--ink); min-width: 2ch; text-align: right; }
 .jside { display: grid; gap: 28px; }
 .jcovers { display: grid; gap: 10px; padding: 0 4px; }
 .jcovers-title { font-family: var(--sans); font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); font-weight: 400; }
@@ -1025,7 +1027,7 @@ i.mk { width: 9px; height: 9px; border-radius: 50%; }
       for (var d = 1; d <= days; d++) {
         var k = key(y, m, d), all = byDate[k], a = all && all[0], dow = (startDow + d - 1) % 7;
         var el = document.createElement(a ? 'button' : 'span');
-        el.className = 'day' + (dow === 0 || dow === 6 ? ' wknd' : '') + (k > todayKey ? ' future' : '') + (k === todayKey ? ' today' : '') + (a ? ' has' : '') + (k === selected ? ' sel' : '');
+        el.className = 'day' + (dow === 0 || dow === 6 ? ' wknd' : '') + (k > todayKey ? ' future' : '') + (k === todayKey ? ' today' : '') + (a ? ' has' : '') + (a && isSat(a) ? ' satday' : '') + (k === selected ? ' sel' : '');
         var num = document.createElement('span'); num.textContent = d; el.appendChild(num);
         if (a) {
           n += all.length;

@@ -1,0 +1,20 @@
+{%- if page.view == 'home' -%}{%- assign t = site.title -%}{%- else -%}{%- assign t = page.title | append: ' · ' | append: site.title -%}{%- endif -%}
+{%- assign d = page.description | default: site.description -%}
+{%- assign u = page.url | replace: 'index.html', '' | prepend: site.baseurl | prepend: site.url -%}
+<title>{{ t }}</title>
+<meta name="description" content="{{ d | escape }}">
+<link rel="canonical" href="{{ u }}">
+<link rel="icon" href="{{ site.baseurl }}/assets/icon/icon.svg" type="image/svg+xml">
+<link rel="icon" href="{{ site.baseurl }}/assets/icon/icon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="{{ site.baseurl }}/assets/icon/icon-180.png">
+<meta name="theme-color" content="#121414">
+<meta property="og:site_name" content="{{ site.title }}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{ t | escape }}">
+<meta property="og:description" content="{{ d | escape }}">
+<meta property="og:url" content="{{ u }}">
+<meta property="og:image" content="{{ site.url }}{{ site.baseurl }}/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Awin Trades: With the trend. Against the noise.">
+<meta name="twitter:card" content="summary_large_image">

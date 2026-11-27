@@ -1,5 +1,7 @@
 {%- assign day = page.date | date: '%Y-%m-%d' -%}
-{%- assign dest = site.baseurl | append: '/#journal/' | append: day -%}
+{%- assign dest = site.baseurl | append: '/journal/#' | append: day -%}
+{%- assign parts = page.content | split: 'assets/journal/' -%}
+{%- if parts.size > 1 -%}{%- assign shot = parts[1] | split: '"' | first | split: ')' | first -%}{%- assign img = site.baseurl | append: '/assets/journal/' | append: shot -%}{%- else -%}{%- assign img = site.baseurl | append: '/assets/og.jpg' -%}{%- endif -%}
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><title>{{ page.title }} · Awin Trades</title>
 <meta name="description" content="{{ page.takeaway | default: site.description | escape }}">
@@ -7,7 +9,11 @@
 <meta property="og:title" content="{{ page.title | escape }} · {{ page.date | date: '%b %-d, %Y' }}">
 <meta property="og:description" content="{{ page.takeaway | default: site.description | escape }}">
 <meta property="og:url" content="{{ site.url }}{{ dest }}">
-<meta name="theme-color" content="#8cc8ec">
+<meta property="og:type" content="article">
+<meta property="og:image" content="{{ site.url }}{{ img }}">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="{{ site.baseurl }}/assets/icon/icon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#121414">
 <meta http-equiv="refresh" content="0; url={{ dest }}">
 <link rel="canonical" href="{{ site.url }}{{ dest }}"></head>
 <body style="background:#121414;color:#fbfaf8;font-family:system-ui,sans-serif"><p><a style="color:#f4f1eb" href="{{ dest }}">Go to this journal entry</a></p></body></html>

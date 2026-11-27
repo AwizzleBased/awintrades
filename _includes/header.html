@@ -1,0 +1,20 @@
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="{{ site.baseurl }}/">
+      <svg aria-hidden="true"><use href="#mark"/></svg>
+      <span class="word">Awin Trades</span>
+      <span class="tag">With the trend.</span>
+    </a>
+    <nav class="main" aria-label="Main">
+      <div class="links" id="navLinks">
+        {%- assign items = "journal:/journal/:Journal,learn:/learn/:Learn,how:/how-i-trade/:How I Trade,community:/community/:Community,about:/about/:About" | split: "," -%}
+        {%- for it in items -%}
+        {%- assign p = it | split: ":" %}
+        <a href="{{ site.baseurl }}{{ p[1] }}"{% if page.view == p[0] %} aria-current="page"{% endif %}>{{ p[2] }}</a>
+        {%- endfor %}
+      </div>
+      <a class="join" href="{{ site.discord }}" target="_blank" rel="noopener">Join Discord</a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="navLinks"><span class="bars" aria-hidden="true"></span><span class="sr">Menu</span></button>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,69 @@
+---
+layout: site
+view: journal
+title: "Journal"
+description: "Every trading session written down: the plan, what happened, and a grade on process. Losing days and sat-out days stay up too."
+permalink: /journal/
+---
+<!-- JOURNAL -->
+<main id="journal" class="view inner">
+  <div class="wrap jwrap">
+    <div class="jhead">
+      <p class="eyebrow">Trading Journal</p>
+      <h1>Every session, <em>written down.</em></h1>
+      <p>One entry per trading day: the plan, what happened, and the grade on process. Losing days and sat-out days stay up too.</p>
+    </div>
+
+    <div class="jdash">
+      <div class="jside">
+      <section class="jcard cal" aria-label="Journal calendar">
+        <div class="cal-top">
+          <button class="cal-nav" type="button" data-step="-1" aria-label="Previous month">‹</button>
+          <h2 class="cal-month" id="calMonth">Month</h2>
+          <button class="cal-nav" type="button" data-step="1" aria-label="Next month">›</button>
+        </div>
+        <div class="cal-dow" aria-hidden="true"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div>
+        <div class="cal-grid" id="calGrid"></div>
+        <div class="cal-foot">
+          <span class="leg"><i class="mk traded"></i>Traded</span>
+          <span class="leg"><i class="mk sat"></i>Sat out</span>
+          <span class="leg"><i class="mk today"></i>Today</span>
+          <span class="cal-count mono" id="calCount"></span>
+        </div>
+      </section>
+        <div class="jcovers">
+        <h2 class="jcovers-title">What every entry covers</h2>
+        <ul class="rows">
+          <li><span class="k">Context</span><span class="v">Trend or range, and which side is in control</span></li>
+          <li><span class="k">Setup</span><span class="v">H2, L2, FH2, FL2, or none</span></li>
+          <li><span class="k">Trade</span><span class="v">Entry, stop and target in points</span></li>
+          <li><span class="k">Result</span><span class="v"><span class="buy">+</span> or <span class="sell">−</span> points, shown as is</span></li>
+          <li><span class="k">Grade</span><span class="v">A to F, on process only</span></li>
+          <li><span class="k">Key takeaway</span><span class="v">The one thing tomorrow's plan changes</span></li>
+        </ul>
+        </div>
+      </div>
+
+      <section class="jcard view-entry" id="entryPanel" aria-live="polite">
+        <p class="empty">No entries yet.</p>
+      </section>
+    </div>
+
+    <section class="jlist" aria-labelledby="allTitle">
+      <h2 id="allTitle" class="jlist-title">All entries</h2>
+      <ol class="elist" id="entryList"></ol>
+    </section>
+
+    <div id="entries" hidden>
+      {% for post in site.posts %}
+      <article class="entry" data-date="{{ post.date | date: '%Y-%m-%d' }}" data-status="{{ post.status | default: 'traded' | downcase }}" data-grade="{{ post.grade }}" data-title="{{ post.title | escape }}" data-setup="{{ post.setup }}">
+        <div class="head"><span class="mono">{{ post.date | date: "%a · %b %-d, %Y" }}</span><span>{{ post.market | default: "ES Futures" }}</span>{% if post.setup %}<span>{{ post.setup }}</span>{% endif %}{% assign st = post.status | default: 'traded' | downcase %}{% if st == 'sat out' or st == 'sat-out' %}<span>Sat out</span>{% endif %}{% if post.grade %}<span>Grade <b class="g">{{ post.grade }}</b></span>{% endif %}</div>
+        <h2>{{ post.title }}</h2>
+        {{ post.content }}
+        {% if post.takeaway %}<p class="takeaway"><span>Takeaway</span>{{ post.takeaway }}</p>{% endif %}
+      </article>
+      {% endfor %}
+    </div>
+
+  </div>
+</main>

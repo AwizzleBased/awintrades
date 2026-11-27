@@ -55,7 +55,7 @@ def card(path):
     name = os.path.basename(path)
     day = name[:10]
     date = datetime.date.fromisoformat(day)
-    link = f"{SITE}/#journal/{day}"
+    link = f"{SITE}/journal/#{day}"
     status = meta.get("status", "traded").lower().replace("-", " ")
 
     desc = []
